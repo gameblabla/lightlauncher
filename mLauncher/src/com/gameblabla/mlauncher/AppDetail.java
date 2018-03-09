@@ -1,4 +1,4 @@
-package am.zoom.mlauncher;
+package com.gameblabla.mlauncher;
 
 import android.graphics.drawable.Drawable;
 
