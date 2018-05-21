@@ -109,22 +109,24 @@ public class MainActivity extends Activity {
 		apps.clear();
 	}
 
+	/* Solution to issue on Nougat for some devices : 
+	https://stackoverflow.com/questions/4779954/disable-back-button-in-android
+	*/
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		return true;
-	}
-	
-	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		menu.clear();
-		
-		return true;
-	}
-	
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event)
+	public boolean onKeyDown(int keyCode, KeyEvent event) 
 	{
-		return super.onKeyDown(keyCode, event);
+		if (keyCode == KeyEvent.KEYCODE_BACK) 
+		{
+			//preventing default implementation previous to android.os.Build.VERSION_CODES.ECLAIR
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);    
+	}
+
+	/* This is also needed for higher APIs. It's important not to call super */
+	@Override
+	public void onBackPressed() 
+	{
 	}
 
 	protected void launchApp(String pkg, String cls){
@@ -134,7 +136,6 @@ public class MainActivity extends Activity {
 		i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
 		startActivity(i);
 	}
-	
 	
 	@SuppressLint("InflateParams")
 	protected View getListItem(){
